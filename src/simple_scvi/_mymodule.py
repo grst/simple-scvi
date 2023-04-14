@@ -14,8 +14,7 @@ TensorDict = Dict[str, torch.Tensor]
 
 
 class MyModule(BaseModuleClass):
-    """
-    Skeleton Variational auto-encoder model.
+    """Skeleton Variational auto-encoder model.
 
     Here we implement a basic version of scVI's underlying VAE :cite:p:`Lopez18`.
     This implementation is for instructional purposes only.
@@ -90,10 +89,10 @@ class MyModule(BaseModuleClass):
         )
 
     def _get_inference_input(self, tensors):
-        """Parse the dictionary to get appropriate args"""
+        """Parse the dictionary to get appropriate args."""
         x = tensors[REGISTRY_KEYS.X_KEY]
 
-        input_dict = dict(x=x)
+        input_dict = {"x": x}
         return input_dict
 
     def _get_generative_input(self, tensors, inference_outputs):
@@ -108,8 +107,7 @@ class MyModule(BaseModuleClass):
 
     @auto_move_data
     def inference(self, x):
-        """
-        High level inference method.
+        """High level inference method.
 
         Runs the inference (encoder) model.
         """
@@ -119,7 +117,7 @@ class MyModule(BaseModuleClass):
         qz_m, qz_v, z = self.z_encoder(x_)
         ql_m, ql_v, library = self.l_encoder(x_)
 
-        outputs = dict(z=z, qz_m=qz_m, qz_v=qz_v, ql_m=ql_m, ql_v=ql_v, library=library)
+        outputs = {"z": z, "qz_m": qz_m, "qz_v": qz_v, "ql_m": ql_m, "ql_v": ql_v, "library": library}
         return outputs
 
     @auto_move_data
@@ -129,7 +127,7 @@ class MyModule(BaseModuleClass):
         px_scale, _, px_rate, px_dropout = self.decoder("gene", z, library)
         px_r = torch.exp(self.px_r)
 
-        return dict(px_scale=px_scale, px_r=px_r, px_rate=px_rate, px_dropout=px_dropout)
+        return {"px_scale": px_scale, "px_r": px_r, "px_rate": px_rate, "px_dropout": px_dropout}
 
     def loss(
         self,
@@ -174,7 +172,7 @@ class MyModule(BaseModuleClass):
 
         loss = torch.mean(reconst_loss + weighted_kl_local)
 
-        kl_local = dict(kl_divergence_l=kl_divergence_l, kl_divergence_z=kl_divergence_z)
+        kl_local = {"kl_divergence_l": kl_divergence_l, "kl_divergence_z": kl_divergence_z}
         return LossOutput(loss=loss, reconstruction_loss=reconst_loss, kl_local=kl_local)
 
     @torch.no_grad()
@@ -184,8 +182,7 @@ class MyModule(BaseModuleClass):
         n_samples=1,
         library_size=1,
     ) -> torch.Tensor:
-        r"""
-        Generate observation samples from the posterior predictive distribution.
+        r"""Generate observation samples from the posterior predictive distribution.
 
         The posterior predictive distribution is written as :math:`p(\hat{x} \mid x)`.
 
@@ -202,7 +199,7 @@ class MyModule(BaseModuleClass):
         x_new
             tensor with shape (n_cells, n_genes, n_samples)
         """
-        inference_kwargs = dict(n_samples=n_samples)
+        inference_kwargs = {"n_samples": n_samples}
         (
             _,
             generative_outputs,

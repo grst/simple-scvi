@@ -12,8 +12,7 @@ TensorDict = Dict[str, torch.Tensor]
 
 
 class MyPyroModule(PyroBaseModuleClass):
-    """
-    Skeleton Variational auto-encoder Pyro model.
+    """Skeleton Variational auto-encoder Pyro model.
 
     Here we implement a basic version of scVI's underlying VAE :cite:p:`Lopez18`.
     This implementation is for instructional purposes only.

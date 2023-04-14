@@ -20,8 +20,7 @@ logger = logging.getLogger(__name__)
 
 
 class MyModel(VAEMixin, UnsupervisedTrainingMixin, BaseModelClass):
-    """
-    Skeleton for an scvi-tools model.
+    """Skeleton for an scvi-tools model.
 
     Please use this skeleton to create new models. This is a simple
     implementation of the scVI model :cite:p:`Lopez18`.
@@ -88,8 +87,7 @@ class MyModel(VAEMixin, UnsupervisedTrainingMixin, BaseModelClass):
         continuous_covariate_keys: Optional[List[str]] = None,
         **kwargs,
     ) -> Optional[AnnData]:
-        """
-        %(summary)s.
+        """%(summary)s.
 
         Parameters
         ----------

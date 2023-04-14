@@ -23,8 +23,7 @@ logger = logging.getLogger(__name__)
 
 
 class MyPyroModel(BaseModelClass):
-    """
-    Skeleton for a pyro version of a scvi-tools model.
+    """Skeleton for a pyro version of a scvi-tools model.
 
     Please use this skeleton to create new models.
 
@@ -80,8 +79,7 @@ class MyPyroModel(BaseModelClass):
         indices: Optional[Sequence[int]] = None,
         batch_size: Optional[int] = None,
     ):
-        """
-        Return the latent representation for each cell.
+        """Return the latent representation for each cell.
 
         This is denoted as :math:`z_n` in our manuscripts.
 
@@ -94,6 +92,8 @@ class MyPyroModel(BaseModelClass):
             Indices of cells in adata to use. If `None`, all cells are used.
         batch_size
             Minibatch size for data loading into model. Defaults to `scvi.settings.batch_size`.
+
+
         Returns
         -------
         latent_representation : np.ndarray
@@ -117,8 +117,7 @@ class MyPyroModel(BaseModelClass):
         plan_kwargs: Optional[dict] = None,
         **trainer_kwargs,
     ):
-        """
-        Train the model.
+        """Train the model.
 
         Parameters
         ----------
@@ -145,7 +144,7 @@ class MyPyroModel(BaseModelClass):
             n_cells = self.adata.n_obs
             max_epochs = np.min([round((20000 / n_cells) * 400), 400])
 
-        plan_kwargs = plan_kwargs if isinstance(plan_kwargs, dict) else dict()
+        plan_kwargs = plan_kwargs if isinstance(plan_kwargs, dict) else {}
 
         data_splitter = DataSplitter(
             self.adata_manager,
@@ -177,8 +176,7 @@ class MyPyroModel(BaseModelClass):
         continuous_covariate_keys: Optional[List[str]] = None,
         **kwargs,
     ) -> Optional[AnnData]:
-        """
-        %(summary)s.
+        """%(summary)s.
 
         Parameters
         ----------
